@@ -9,8 +9,9 @@ import com.xianguo.config.PropertiesUtil;
 
 @Component
 public class WechatConstants {
-	
+
 	@Autowired
+	@SuppressWarnings("unused")
 	private WechatConstants constants;
 	
 	@Autowired

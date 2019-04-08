@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.xianguo.wechatpn.handle.MsgHandle;
+import com.xianguo.wechatpn.handle.Handle;
 import com.xianguo.wechatpn.utils.Decript;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class WechatController {
 	private final String token = "JqQDY3gcQ2ydEl5tCxNZJB6aeOdrkHr6";
 	
 	@Autowired
-	private MsgHandle handle;
+	private Handle handle;
 	
 	@RequestMapping("/WechatUrl")
 	public String WechatUrl(HttpServletRequest request) throws Exception {
