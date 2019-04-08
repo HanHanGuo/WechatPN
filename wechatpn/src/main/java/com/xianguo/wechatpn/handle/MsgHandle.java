@@ -3,8 +3,8 @@ package com.xianguo.wechatpn.handle;
 import org.springframework.stereotype.Component;
 
 import com.thoughtworks.xstream.XStream;
-import com.xianguo.wechatpn.beans.TextMsg;
-import com.xianguo.wechatpn.beans.WechatMessage;
+import com.xianguo.wechatpn.WechatMessage;
+import com.xianguo.wechatpn.msg.TextMsg;
 import com.xianguo.wechatpn.utils.XmlUtils;
 
 import lombok.extern.slf4j.Slf4j;

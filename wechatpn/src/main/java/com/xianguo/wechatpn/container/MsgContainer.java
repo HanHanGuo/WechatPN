@@ -5,19 +5,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xianguo.wechatpn.beans.ImageMsg;
-import com.xianguo.wechatpn.beans.LinkMsg;
-import com.xianguo.wechatpn.beans.LocationMsg;
-import com.xianguo.wechatpn.beans.ShortvideoMsg;
-import com.xianguo.wechatpn.beans.TextMsg;
-import com.xianguo.wechatpn.beans.VideoMsg;
-import com.xianguo.wechatpn.beans.VoiceMsg;
-import com.xianguo.wechatpn.beans.WeChatMsgInterceptorList;
-import com.xianguo.wechatpn.beans.WeChatMsgListenerList;
-import com.xianguo.wechatpn.beans.WechatMessage;
+import com.xianguo.wechatpn.WechatMsgInterceptorList;
+import com.xianguo.wechatpn.WechatMsgListenerList;
+import com.xianguo.wechatpn.WechatMessage;
 import com.xianguo.wechatpn.enums.WechatMsgType;
 import com.xianguo.wechatpn.interfaces.WeChatMsgInterceptor;
 import com.xianguo.wechatpn.interfaces.WeChatMsgListener;
+import com.xianguo.wechatpn.msg.ImageMsg;
+import com.xianguo.wechatpn.msg.LinkMsg;
+import com.xianguo.wechatpn.msg.LocationMsg;
+import com.xianguo.wechatpn.msg.ShortvideoMsg;
+import com.xianguo.wechatpn.msg.TextMsg;
+import com.xianguo.wechatpn.msg.VideoMsg;
+import com.xianguo.wechatpn.msg.VoiceMsg;
 import com.xianguo.wechatpn.utils.Constants;
 
 /**
@@ -29,10 +29,10 @@ import com.xianguo.wechatpn.utils.Constants;
 public class MsgContainer {
 	
 	@Autowired(required=false)
-	private WeChatMsgInterceptorList weChatMsgInterceptorList;
+	private WechatMsgInterceptorList weChatMsgInterceptorList;
 	
 	@Autowired(required=false)
-	private WeChatMsgListenerList weChatMsgListenerList;
+	private WechatMsgListenerList weChatMsgListenerList;
 	
 	
 	/**
@@ -68,25 +68,14 @@ public class MsgContainer {
 	 * 处理文字消息
 	 *
 	 * @author 鲜果
-	 * @param @param textMsg 文字消息test
+	 * @param @param textMsg 文字消息
 	 * @param @return
 	 * @date 2019年4月8日
 	 * @return String
 	 * @throws
 	 */
 	public String HandleTextMsg(TextMsg textMsg,String xml) {
-		List<WeChatMsgListener> listeners = weChatMsgListenerList.get(WechatMsgType.TEXT);
-		for(WeChatMsgListener listener : listeners) {
-			listener.Listen(textMsg, xml);
-		}
-		List<WeChatMsgInterceptor> Interceptors = weChatMsgInterceptorList.get(WechatMsgType.TEXT);
-		String nextStr = Constants.WX_MSG_NEXT;
-		Iterator<WeChatMsgInterceptor> iterator = Interceptors.iterator();
-		while((nextStr == null || nextStr.equals(Constants.WX_MSG_NEXT)) && iterator.hasNext()) {
-			WeChatMsgInterceptor interceptor = iterator.next();
-			nextStr = interceptor.Reply(textMsg, xml);
-		}
-		return "";
+		return HandleMsgByType(WechatMsgType.TEXT,textMsg,xml);
 	}
 	
 	/**
@@ -100,7 +89,7 @@ public class MsgContainer {
 	 * @throws
 	 */
 	public String HandleImageMsg(ImageMsg imageMsg,String xml) {
-		return "";
+		return HandleMsgByType(WechatMsgType.IMAGE,imageMsg,xml);
 	}
 	
 	/**
@@ -114,7 +103,7 @@ public class MsgContainer {
 	 * @throws
 	 */
 	public String HandleVoiceMsg(VoiceMsg voiceMsg,String xml) {
-		return "";
+		return HandleMsgByType(WechatMsgType.VOICE,voiceMsg,xml);
 	}
 	
 	/**
@@ -128,7 +117,7 @@ public class MsgContainer {
 	 * @throws
 	 */
 	public String HandleVideoMsg(VideoMsg videoMsg,String xml) {
-		return "";
+		return HandleMsgByType(WechatMsgType.VIDEO,videoMsg,xml);
 	}
 	
 	/**
@@ -142,7 +131,7 @@ public class MsgContainer {
 	 * @throws
 	 */
 	public String HandleShortvideoMsg(ShortvideoMsg shortvideoMsg,String xml) {
-		return "";
+		return HandleMsgByType(WechatMsgType.SHORTVIDEO,shortvideoMsg,xml);
 	}
 	
 	/**
@@ -156,7 +145,7 @@ public class MsgContainer {
 	 * @throws
 	 */
 	public String HandleLocationMsg(LocationMsg locationMsg,String xml) {
-		return "";
+		return HandleMsgByType(WechatMsgType.LOCATION,locationMsg,xml);
 	}
 	
 	/**
@@ -170,7 +159,33 @@ public class MsgContainer {
 	 * @throws
 	 */
 	public String HandleLinkMsg(LinkMsg linkMsg,String xml) {
-		return "";
+		return HandleMsgByType(WechatMsgType.LINK,linkMsg,xml);
 	}
 	
+	/**
+	 * 消息处理
+	 *
+	 * @author 鲜果
+	 * @param @param wechatMsgType 消息类型
+	 * @param @param wechatMessage 消息实体
+	 * @param @param xml 微信发送过来的消息xml
+	 * @param @return
+	 * @date 2019年4月8日
+	 * @return String
+	 * @throws
+	 */
+	private String HandleMsgByType(WechatMsgType wechatMsgType,WechatMessage wechatMessage,String xml) {
+		List<WeChatMsgListener> listeners = weChatMsgListenerList.get(wechatMsgType);
+		for(WeChatMsgListener listener : listeners) {
+			listener.Listen(wechatMessage, xml);
+		}
+		List<WeChatMsgInterceptor> Interceptors = weChatMsgInterceptorList.get(wechatMsgType);
+		String nextStr = Constants.WX_MSG_NEXT;
+		Iterator<WeChatMsgInterceptor> iterator = Interceptors.iterator();
+		while((nextStr == null || nextStr.equals(Constants.WX_MSG_NEXT)) && iterator.hasNext()) {
+			WeChatMsgInterceptor interceptor = iterator.next();
+			nextStr = interceptor.Reply(wechatMessage, xml);
+		}
+		return nextStr;
+	}
 }

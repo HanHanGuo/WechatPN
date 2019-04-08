@@ -1,4 +1,4 @@
-package com.xianguo.wechatpn.beans;
+package com.xianguo.wechatpn;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.xianguo.wechatpn.enums.WechatMsgType;

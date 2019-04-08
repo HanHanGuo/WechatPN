@@ -1,6 +1,6 @@
 package com.xianguo.wechatpn.interfaces;
 
-import com.xianguo.wechatpn.beans.WechatMessage;
+import com.xianguo.wechatpn.WechatMessage;
 
 /**
  * 微信消息拦截器

@@ -1,4 +1,6 @@
-package com.xianguo.wechatpn.beans;
+package com.xianguo.wechatpn.msg;
+
+import com.xianguo.wechatpn.WechatMessage;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
