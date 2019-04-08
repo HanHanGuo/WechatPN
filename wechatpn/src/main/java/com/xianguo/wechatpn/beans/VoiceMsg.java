@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class VoiceMsg {
+public class VoiceMsg extends WechatMessage{
 	private String MediaId;//语音消息媒体id，可以调用获取临时素材接口拉取数据。
 	private String Format;//语音格式，如amr，speex等
 }

@@ -1,14 +1,8 @@
 package com.xianguo.wechatpn.handle;
 
-import java.io.Writer;
-
 import org.springframework.stereotype.Component;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.core.util.QuickWriter;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
-import com.thoughtworks.xstream.io.xml.XppDriver;
 import com.xianguo.wechatpn.beans.TextMsg;
 import com.xianguo.wechatpn.beans.WechatMessage;
 import com.xianguo.wechatpn.utils.XmlUtils;
@@ -17,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class Handle {
+public class MsgHandle {
 
 	/**
 	 * 消息处理头，分发任务
