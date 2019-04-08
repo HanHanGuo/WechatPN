@@ -68,7 +68,7 @@ public class MsgContainer {
 	 * 处理文字消息
 	 *
 	 * @author 鲜果
-	 * @param @param textMsg 文字消息
+	 * @param @param textMsg 文字消息test
 	 * @param @return
 	 * @date 2019年4月8日
 	 * @return String
