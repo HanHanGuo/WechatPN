@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.xianguo.config.PropertiesUtil;
+import com.xianguo.wechatpn.api.TokenApi;
+import com.xianguo.wechatpn.api.TokenApi.TokenResponse;
 
 @Component
 public class WechatConstants {
-
+	
 	@Autowired
 	@SuppressWarnings("unused")
 	private WechatConstants constants;
@@ -34,4 +36,6 @@ public class WechatConstants {
 	public static String WX_SECRET;//微信公众号secret
 	
 	public static String WX_TOKEN;//微信token
+	
+	public static String WX_ACCESS_TOKEN;//微信token
 }

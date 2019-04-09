@@ -115,8 +115,9 @@ public class Handle {
 					break;
 			}
 			return "";
+		default:
+			return "";
 		}
-		return "";
 	}
 
 }

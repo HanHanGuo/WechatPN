@@ -1,9 +1,20 @@
 package com.xianguo.wechatpn.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.xianguo.wechatpn.api.TokenApi;
+import com.xianguo.wechatpn.api.TokenApi.TokenResponse;
 import com.xianguo.wechatpn.beans.Token;
 
 public class AccessToken {
+	
+
+	static {
+		TokenApi api = new TokenApi();
+		TokenResponse token = api.execute();
+		Token = token.getAccess_token();
+	}
+	
+	public static String Token;
 	
 	private static Token accessToken;
 
