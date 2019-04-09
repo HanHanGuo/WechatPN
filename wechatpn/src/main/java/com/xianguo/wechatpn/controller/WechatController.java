@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xianguo.wechatpn.handle.Handle;
 import com.xianguo.wechatpn.utils.Decript;
+import com.xianguo.wechatpn.utils.WechatConstants;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class WechatController {
-	
-	private final String token = "JqQDY3gcQ2ydEl5tCxNZJB6aeOdrkHr6";
 	
 	@Autowired
 	private Handle handle;
@@ -35,21 +34,13 @@ public class WechatController {
 		if(xml != null && !"".equals(xml)) {//如果是xml消息
 			return handle.HandleHead(sb.toString());//交由处理器处理
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		System.out.println("开始签名校验");
+		log.info("开始签名校验");
 	    String signature = request.getParameter("signature");
 	    String timestamp = request.getParameter("timestamp");
 	    String nonce = request.getParameter("nonce");
 	    String echostr = request.getParameter("echostr");
 	    
-	    String[] strArray = { token, timestamp, nonce };
+	    String[] strArray = { WechatConstants.WX_TOKEN, timestamp, nonce };
 	    Arrays.sort(strArray);
 	 
 	    StringBuilder sbuilder = new StringBuilder();
@@ -62,10 +53,10 @@ public class WechatController {
 	    
 	    //校验签名
 	    if (mytoken != null && mytoken != "" && mytoken.equals(signature)) {
-	        System.out.println("签名校验通过。");
+	    	log.info("签名校验通过。");
 	        return echostr;//如果检验成功输出echostr，微信服务器接收到此输出，才会确认检验完成。
 	    } else {
-	        System.out.println("签名校验失败。");
+	    	log.info("签名校验失败。");
 	    }
 		
 		

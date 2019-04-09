@@ -1,6 +1,7 @@
 package com.xianguo.wechatpn.interfaces;
 
 import com.xianguo.wechatpn.WechatMessage;
+import com.xianguo.wechatpn.WechatReplyMsg;
 
 /**
  * 微信消息拦截器
@@ -21,6 +22,6 @@ public interface WeChatMsgInterceptor {
 	 * @return String
 	 * @throws
 	 */
-	public String Reply(WechatMessage wechatMessage,String xml);
+	public WechatReplyMsg Reply(WechatMessage wechatMessage,String xml);
 	
 }

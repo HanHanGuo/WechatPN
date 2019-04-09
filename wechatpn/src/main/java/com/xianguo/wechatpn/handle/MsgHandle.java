@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.xianguo.wechatpn.WechatMessage;
 import com.xianguo.wechatpn.WechatMsgInterceptorList;
 import com.xianguo.wechatpn.WechatMsgListenerList;
+import com.xianguo.wechatpn.WechatReplyMsg;
 import com.xianguo.wechatpn.enums.WechatMsgType;
 import com.xianguo.wechatpn.interfaces.WeChatMsgInterceptor;
 import com.xianguo.wechatpn.interfaces.WeChatMsgListener;
@@ -192,11 +193,31 @@ public class MsgHandle {
 				Iterator<WeChatMsgInterceptor> iterator = Interceptors.iterator();
 				while((nextStr == null || nextStr.equals(WechatConstants.WX_MSG_NEXT)) && iterator.hasNext()) {
 					WeChatMsgInterceptor interceptor = iterator.next();
-					nextStr = interceptor.Reply(wechatMessage, xml);
+					nextStr = HandleReply(wechatMessage, interceptor, xml);
 				}
 				return nextStr;
 			}
 		}
 		return "";
+	}
+	
+	/**
+	 * 处理微信消息回复对象，转xml操作
+	 *
+	 * @author 鲜果
+	 * @param @param wechatMessage
+	 * @param @param interceptor
+	 * @param @param xml
+	 * @param @return
+	 * @date 2019年4月9日
+	 * @return String
+	 * @throws
+	 */
+	private String HandleReply(WechatMessage wechatMessage,WeChatMsgInterceptor interceptor,String xml){
+		WechatReplyMsg replyMsg = interceptor.Reply(wechatMessage, xml);
+		if(replyMsg == null) {
+			return null;
+		}
+		return replyMsg.returnXml();
 	}
 }

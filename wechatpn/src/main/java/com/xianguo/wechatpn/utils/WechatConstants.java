@@ -23,6 +23,7 @@ public class WechatConstants {
 	private void init(ResourceBundle res) {
 		WX_APPID = res.getString("wx.appid");
 		WX_SECRET = res.getString("wx.secret");
+		WX_TOKEN = res.getString("wx.token");
 	}
 
 	
@@ -31,4 +32,6 @@ public class WechatConstants {
 	public static String WX_APPID;//微信公众号appid
 	
 	public static String WX_SECRET;//微信公众号secret
+	
+	public static String WX_TOKEN;//微信token
 }

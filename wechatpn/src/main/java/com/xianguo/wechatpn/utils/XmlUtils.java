@@ -8,9 +8,13 @@ public class XmlUtils {
 	/**
 	 * 获取xml转实体，转换对象
 	 *
-	 * @author 鲜果 @param @return @date 2019年4月8日 @return XStream @throws
+	 * @author 鲜果
+	 * @param @return
+	 * @date 2019年4月9日
+	 * @return XStream
+	 * @throws
 	 */
-	public static XStream GetXmlToBean() {
+	public static XStream GetXmlBean() {
 		return new XStream() {
 			@Override
 			protected MapperWrapper wrapMapper(MapperWrapper next) {

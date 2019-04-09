@@ -14,7 +14,10 @@ public enum WechatMsgType {
 	SHORTVIDEO("shortvideo"),//短视频消息
 	LOCATION("location"),//地理位置消息
 	LINK("link"),//链接消息
-	EVENT("event");//事件推送
+	EVENT("event"),//事件推送
+	MUSIC("music"),//音乐消息
+	NEWS("news");//图文消息
+	
 	
 	private final String value;
 	

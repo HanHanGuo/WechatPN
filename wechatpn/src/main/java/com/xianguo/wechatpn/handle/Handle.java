@@ -40,7 +40,7 @@ public class Handle {
 	 * @throws
 	 */
 	public String HandleHead(String xml) {
-		XStream xStream = XmlUtils.GetXmlToBean();
+		XStream xStream = XmlUtils.GetXmlBean();
 		xStream.alias("xml", WechatMessage.class);
 		WechatMessage wechatMessage = (WechatMessage) xStream.fromXML(xml);
 		if (wechatMessage == null) {
@@ -54,61 +54,61 @@ public class Handle {
 
 		switch (wechatMessage.getMsgType()) {
 		case TEXT:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", TextMsg.class);
 			TextMsg textMsg = (TextMsg) xStream.fromXML(xml);
 			return msgHandle.HandleTextMsg(textMsg, xml);
 		case IMAGE:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", ImageMsg.class);
 			ImageMsg imageMsg = (ImageMsg) xStream.fromXML(xml);
 			return msgHandle.HandleImageMsg(imageMsg, xml);
 		case LINK:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", LinkMsg.class);
 			LinkMsg linkMsg = (LinkMsg) xStream.fromXML(xml);
 			return msgHandle.HandleLinkMsg(linkMsg, xml);
 		case LOCATION:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", LocationMsg.class);
 			LocationMsg locationMsg = (LocationMsg) xStream.fromXML(xml);
 			return msgHandle.HandleLocationMsg(locationMsg, xml);
 		case SHORTVIDEO:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", ShortvideoMsg.class);
 			ShortvideoMsg shortvideoMsg = (ShortvideoMsg) xStream.fromXML(xml);
 			return msgHandle.HandleShortvideoMsg(shortvideoMsg, xml);
 		case VIDEO:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", VideoMsg.class);
 			VideoMsg videoMsg = (VideoMsg) xStream.fromXML(xml);
 			return msgHandle.HandleVideoMsg(videoMsg, xml);
 		case VOICE:
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", VoiceMsg.class);
 			VoiceMsg voiceMsg = (VoiceMsg) xStream.fromXML(xml);
 			return msgHandle.HandleVoiceMsg(voiceMsg, xml);
 		case EVENT://处理事件
-			xStream = XmlUtils.GetXmlToBean();
+			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", WechatEventMessage.class);
 			WechatEventMessage wechatEventMessage = (WechatEventMessage) xStream.fromXML(xml);
 			switch(wechatEventMessage.getEvent()) {
 				case SUBSCRIBE:
 				case UNSUBSCRIBE:
 				case SCAN:
-					xStream = XmlUtils.GetXmlToBean();
+					xStream = XmlUtils.GetXmlBean();
 					xStream.alias("xml", SubscribeEvent.class);
 					SubscribeEvent subscribeEvent = (SubscribeEvent) xStream.fromXML(xml);
 					eventHandle.Handle(subscribeEvent, xml);
 					break;
 				case LOCATION:
-					xStream = XmlUtils.GetXmlToBean();
+					xStream = XmlUtils.GetXmlBean();
 					xStream.alias("xml", LocationEvent.class);
 					LocationEvent locationEvent = (LocationEvent) xStream.fromXML(xml);
 					eventHandle.HandleLocationEvent(locationEvent, xml);
 					break;
 				case MENU_CLICK:
-					xStream = XmlUtils.GetXmlToBean();
+					xStream = XmlUtils.GetXmlBean();
 					xStream.alias("xml", MenuClickEvent.class);
 					MenuClickEvent menuClickEvent = (MenuClickEvent) xStream.fromXML(xml);
 					eventHandle.HandleMenuClickEvent(menuClickEvent, xml);
