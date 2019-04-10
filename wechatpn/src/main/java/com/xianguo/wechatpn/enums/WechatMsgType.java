@@ -1,12 +1,14 @@
 package com.xianguo.wechatpn.enums;
 
+import com.xianguo.wechatpn.interfaces.EnmuDecoderInterface;
+
 /**
  * 消息类型枚举
  * @author 鲜果
  * @date 2019年4月8日
  *
  */
-public enum WechatMsgType {
+public enum WechatMsgType implements EnmuDecoderInterface {
 	TEXT("text"),//文字消息
 	IMAGE("image"),//图片消息
 	VOICE("voice"),//语音消息
@@ -25,6 +27,7 @@ public enum WechatMsgType {
 		this.value = value;
 	}
 	
+	@Override
 	public String getValue() {
 		return this.value;
 	}
@@ -37,5 +40,11 @@ public enum WechatMsgType {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public WechatMsgType getEnmuByKeyInterface(String key) {
+		return getEnmuByKey(key);
 	}
 }

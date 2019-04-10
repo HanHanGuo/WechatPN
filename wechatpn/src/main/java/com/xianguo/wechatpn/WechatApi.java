@@ -40,9 +40,9 @@ public class WechatApi<R> {
 		try {
 			for(String key : params.keySet()) {
 				if(path.lastIndexOf("?") != -1) {
-					key += "&" + key + "=" + params.get(key);
+					path += "&" + key + "=" + params.get(key);
 				}else {
-					key += "?" + key + "=" + params.get(key);
+					path += "?" + key + "=" + params.get(key);
 				}
 			}
 			URL url = new URL(path);

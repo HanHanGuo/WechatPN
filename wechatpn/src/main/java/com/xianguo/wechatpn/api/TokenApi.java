@@ -1,11 +1,9 @@
 package com.xianguo.wechatpn.api;
 
-import com.xianguo.wechatpn.WechatApi;
 import com.xianguo.wechatpn.WechatApiDefect;
 import com.xianguo.wechatpn.WechatApiPublicResponse;
 import com.xianguo.wechatpn.api.TokenApi.TokenResponse;
 import com.xianguo.wechatpn.enums.HttpRequestType;
-import com.xianguo.wechatpn.interfaces.ApiIsSuccess;
 import com.xianguo.wechatpn.utils.WechatConstants;
 
 import lombok.Data;
@@ -25,18 +23,10 @@ public class TokenApi extends WechatApiDefect<TokenResponse> {
 	
 	@Data
 	@EqualsAndHashCode(callSuper=false)
-	public static class TokenResponse extends WechatApiPublicResponse implements ApiIsSuccess {
+	public static class TokenResponse extends WechatApiPublicResponse {
 		
 		private String access_token;//获取到的凭证
 		private String expires_in;//凭证有效时间，单位：秒
-		
-		@Override
-		public Boolean check() {
-			if(access_token != null && !"".equals(access_token)) {
-				return true;
-			}
-			return false;
-		}
 		
 	}
 }

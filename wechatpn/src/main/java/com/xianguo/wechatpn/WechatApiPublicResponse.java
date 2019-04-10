@@ -11,7 +11,7 @@ public class WechatApiPublicResponse implements ApiIsSuccess {
 	
 	@Override
 	public Boolean check() {
-		if("0".equals(errcode) && "ok".equals(errmsg)) {
+		if(("0".equals(errcode) && "ok".equals(errmsg)) || ("".equals(errcode) && "".equals(errmsg)) || (errcode == null && errmsg == null)) {
 			return true;
 		}
 		return false;

@@ -1,12 +1,14 @@
 package com.xianguo.wechatpn.enums;
 
+import com.xianguo.wechatpn.interfaces.EnmuDecoderInterface;
+
 /**
  * 菜单按钮类型
  * @author 鲜果
  * @date 2019年4月9日
  *
  */
-public enum WechatMenuType {
+public enum WechatMenuType implements EnmuDecoderInterface{
 	CLICK("click"),//点击推事件用户点击click类型按钮后，微信服务器会通过消息接口推送消息类型为event的结构给开发者（参考消息接口指南），并且带上按钮中开发者填写的key值，开发者可以通过自定义的key值与用户进行交互；
 	VIEW("view"),//跳转URL用户点击view类型按钮后，微信客户端将会打开开发者在按钮中填写的网页URL，可与网页授权获取用户基本信息接口结合，获得用户基本信息。
 	SCANCODE_PUSH("scancode_push"),//扫码推事件用户点击按钮后，微信客户端将调起扫一扫工具，完成扫码操作后显示扫描结果（如果是URL，将进入URL），且会将扫码的结果传给开发者，开发者可以下发消息。
@@ -24,6 +26,7 @@ public enum WechatMenuType {
 		this.value = value;
 	}
 	
+	@Override
 	public String getValue() {
 		return this.value;
 	}
@@ -36,5 +39,12 @@ public enum WechatMenuType {
 			}
 		}
 		return null;
+	}
+	
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public WechatMenuType getEnmuByKeyInterface(String key) {
+		return getEnmuByKey(key);
 	}
 }

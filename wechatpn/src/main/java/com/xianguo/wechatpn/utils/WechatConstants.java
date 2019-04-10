@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.xianguo.config.PropertiesUtil;
-import com.xianguo.wechatpn.api.TokenApi;
-import com.xianguo.wechatpn.api.TokenApi.TokenResponse;
 
 @Component
 public class WechatConstants {

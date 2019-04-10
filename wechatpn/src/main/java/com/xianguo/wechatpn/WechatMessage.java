@@ -2,8 +2,10 @@ package com.xianguo.wechatpn;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.xianguo.wechatpn.enums.WechatMsgType;
+import com.xianguo.wechatpn.utils.FastJsonEnmuDecoder;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ public class WechatMessage {
 	private String ToUserName;//开发者微信号
 	private String FromUserName;//发送方帐号（一个OpenID）
 	private String CreateTime;//消息创建时间 （整型）
+	@JSONField(serializeUsing = FastJsonEnmuDecoder.class, deserializeUsing = FastJsonEnmuDecoder.class)
 	private WechatMsgType MsgType;//消息类型
 	private String MsgId;//消息id，64位整型
 	

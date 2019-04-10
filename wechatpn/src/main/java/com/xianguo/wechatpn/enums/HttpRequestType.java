@@ -1,6 +1,14 @@
 package com.xianguo.wechatpn.enums;
 
-public enum HttpRequestType {
+import com.xianguo.wechatpn.interfaces.EnmuDecoderInterface;
+
+/**
+ * http请求类别
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
+public enum HttpRequestType implements EnmuDecoderInterface{
 	POST("POST"),//post请求
 	GET("GET");//get请求
 	
@@ -10,6 +18,7 @@ public enum HttpRequestType {
 		this.value = value;
 	}
 	
+	@Override
 	public String getValue() {
 		return this.value;
 	}
@@ -22,6 +31,12 @@ public enum HttpRequestType {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public HttpRequestType getEnmuByKeyInterface(String key) {
+		return getEnmuByKey(key);
 	}
 	
 }
