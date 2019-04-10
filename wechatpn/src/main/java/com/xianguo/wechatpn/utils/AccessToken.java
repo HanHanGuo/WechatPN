@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccessToken {
 
-	private static String AccessToken;
+	public static String AccessToken;
 	private static Boolean isReturn = true;
 	
 	@SuppressWarnings("all")
@@ -58,7 +58,7 @@ public class AccessToken {
 	 *
 	 * @author 武昱坤 @param @return @date 2019年4月9日 @return Token @throws
 	 */
-	public static String getSocketToken() {
+	private static String getSocketToken() {
 		Socket socket;
 		try {
 			socket = new Socket(WechatConstants.WX_TOKEN_HOST, WechatConstants.WX_TOKEN_PROT);
@@ -72,7 +72,7 @@ public class AccessToken {
 		return null;
 	}
 	
-	public class TokenServer implements Runnable{
+	private class TokenServer implements Runnable{
 
 		@Override
 		public void run() {
@@ -109,7 +109,7 @@ public class AccessToken {
 	 * @date 2019年4月9日
 	 *
 	 */
-	public class ScoketServer implements Runnable {
+	private class ScoketServer implements Runnable {
 		@SuppressWarnings("resource")
 		@Override
 		public void run() {
@@ -153,7 +153,7 @@ public class AccessToken {
 	 * @param port port
 	 * @return boolean
 	 */
-	public static boolean isRunning(String host, int port) {
+	private static boolean isRunning(String host, int port) {
 		Socket sClient = null;
 		try {
 			SocketAddress saAdd = new InetSocketAddress(host.trim(), port);
@@ -184,8 +184,8 @@ public class AccessToken {
 	 * @param socket
 	 * @return
 	 */
-	@SuppressWarnings("resource")
-	public static boolean isServerClose(String host, int port) {
+	@SuppressWarnings("all")
+	private static boolean isServerClose(String host, int port) {
 		Socket socket;
 		try {
 			socket = new Socket(host, port);
