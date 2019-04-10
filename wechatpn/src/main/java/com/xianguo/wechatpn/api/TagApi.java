@@ -38,7 +38,7 @@ public class TagApi {
 	public static class CreateTagApi extends WechatApiFull<CreateTagRequest, CreateTagResponse> {
 		
 		public CreateTagApi() {
-			super(CreateTagResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/create?access_token="+AccessToken.Token, HttpRequestType.POST);
+			super(CreateTagResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/create?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
 		}
 
 		@Getter
@@ -83,7 +83,7 @@ public class TagApi {
 	public static class QueryTagApi extends WechatApiDefect<QueryTagResponse> {
 		
 		public QueryTagApi() {
-			super(QueryTagResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/get?access_token="+AccessToken.Token, HttpRequestType.GET);
+			super(QueryTagResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/get?access_token="+AccessToken.getAccessToken(), HttpRequestType.GET);
 		}
 
 		@Data
@@ -110,7 +110,7 @@ public class TagApi {
 	public static class UpdateTagApi extends WechatApiFull<UpdateTageRequest, WechatApiPublicResponse> {
 		
 		public UpdateTagApi() {
-			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/update?access_token="+AccessToken.Token, HttpRequestType.POST);
+			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/update?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
 		}
 
 		@Getter
@@ -138,7 +138,7 @@ public class TagApi {
 	public static class DeleteTagApi extends WechatApiFull<DeleteTageRequest, WechatApiPublicResponse>{
 		
 		public DeleteTagApi() {
-			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/delete?access_token="+AccessToken.Token, HttpRequestType.POST);
+			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/delete?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
 		}
 
 		@Getter
@@ -172,7 +172,7 @@ public class TagApi {
 	public static class GetUserByTagApi extends WechatApiFull<GetUserByTagRequest, GetUserByTagResponse>{
 		
 		public GetUserByTagApi() {
-			super(GetUserByTagResponse.class, "https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token="+AccessToken.Token, HttpRequestType.GET);
+			super(GetUserByTagResponse.class, "https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token="+AccessToken.getAccessToken(), HttpRequestType.GET);
 		}
 
 		@Data
@@ -204,7 +204,7 @@ public class TagApi {
 	public static class TagingUserApi extends WechatApiFull<TagingUserRequest, WechatApiPublicResponse> {
 		
 		public TagingUserApi() {
-			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token="+AccessToken.Token, HttpRequestType.POST);
+			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
 		}
 
 		@Data
@@ -228,7 +228,7 @@ public class TagApi {
 	public static class CancelTageUserApi extends WechatApiFull<CancelTageUserRequest, WechatApiPublicResponse> {
 		
 		public CancelTageUserApi() {
-			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/members/batchuntagging?access_token="+AccessToken.Token, HttpRequestType.POST);
+			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/members/batchuntagging?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
 		}
 
 		public static class CancelTageUserRequest extends TagingUserRequest {
@@ -246,7 +246,7 @@ public class TagApi {
 	public static class GetUserTagsApi extends WechatApiFull<GetUserTagsRequest, GetUserTagsResponse>{
 		
 		public GetUserTagsApi() {
-			super(GetUserTagsResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token="+AccessToken.Token, HttpRequestType.GET);
+			super(GetUserTagsResponse.class, "https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token="+AccessToken.getAccessToken(), HttpRequestType.GET);
 		}
 
 		@Data

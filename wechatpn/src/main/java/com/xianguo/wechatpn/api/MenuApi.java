@@ -34,7 +34,7 @@ public class MenuApi {
 	public static class CreateMenuApi extends WechatApiFull<CreateMenuRequest, WechatApiPublicResponse> {
 
 		public CreateMenuApi() {
-			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+AccessToken.Token, HttpRequestType.POST);
+			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
 		}
 		
 		@Data
@@ -72,7 +72,7 @@ public class MenuApi {
 	public static class QueryMenuApi extends WechatApiDefect<CreateMenuResponse> {
 		
 		public QueryMenuApi() {
-			super(CreateMenuResponse.class, "https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+AccessToken.Token, HttpRequestType.GET);
+			super(CreateMenuResponse.class, "https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+AccessToken.getAccessToken(), HttpRequestType.GET);
 		}
 
 		public static class CreateMenuResponse extends CreateMenuRequest implements ApiIsSuccess{
@@ -101,7 +101,7 @@ public class MenuApi {
 	public static class DeleteMenuApi extends WechatApiDefect<WechatApiPublicResponse> {
 
 		public DeleteMenuApi() {
-			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token="+AccessToken.Token, HttpRequestType.GET);
+			super(WechatApiPublicResponse.class, "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token="+AccessToken.getAccessToken(), HttpRequestType.GET);
 		}
 		
 	}

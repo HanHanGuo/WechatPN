@@ -27,7 +27,7 @@ public class UserApi {
 	public static class GetUserInfoApi extends WechatApiFull<GetUserInfoRequest, GetUserInfoResponse> {
 		
 		public GetUserInfoApi() {
-			super(GetUserInfoResponse.class, "https://api.weixin.qq.com/cgi-bin/user/info?access_token="+AccessToken.Token, HttpRequestType.GET);
+			super(GetUserInfoResponse.class, "https://api.weixin.qq.com/cgi-bin/user/info?access_token="+AccessToken.getAccessToken(), HttpRequestType.GET);
 		}
 
 		@Data
