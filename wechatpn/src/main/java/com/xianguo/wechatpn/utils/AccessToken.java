@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccessToken {
 
-	public static String AccessToken;
+	private static String AccessToken;
 	private static Boolean isReturn = true;
 	
 	@SuppressWarnings("all")
