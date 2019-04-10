@@ -26,7 +26,7 @@ public class TokenApi extends WechatApiDefect<TokenResponse> {
 	public static class TokenResponse extends WechatApiPublicResponse {
 		
 		private String access_token;//获取到的凭证
-		private String expires_in;//凭证有效时间，单位：秒
+		private Integer expires_in;//凭证有效时间，单位：秒
 		
 	}
 }
