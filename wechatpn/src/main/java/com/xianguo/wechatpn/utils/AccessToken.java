@@ -18,7 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccessToken {
 
-	public static String AccessToken;
+	private static String AccessToken;
+	private static Boolean isReturn = true;
 	
 	@SuppressWarnings("all")
 	public static String getAccessToken() {
@@ -26,19 +27,24 @@ public class AccessToken {
 		if (AccessToken != null) {
 			return AccessToken;
 		}
-
 		// 2、token通过scoket进行操作
-		Socket socket;
-		
 		try {
 			// 如果目标地址有socket在运行
 			if (isRunning(WechatConstants.WX_TOKEN_HOST,WechatConstants.WX_TOKEN_PROT)) {
 				return getSocketToken();// 直接取token并返回
 			} else {
+				isReturn = true;
 				Runnable server = new AccessToken().new ScoketServer();
 				new Thread(server).start();
-				Thread.sleep(100000000);
-				return getSocketToken();
+				int i = 0;
+				while(isReturn) {
+					Thread.sleep(150);
+					i++;
+					if(i>=6*5) {
+						break;
+					}
+				}
+				return AccessToken;
 			}
 		} catch (Exception e) {
 			log.info("socket通信异常", e);
@@ -61,7 +67,6 @@ public class AccessToken {
 			input.read(bt);
 			return new String(bt);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -76,6 +81,7 @@ public class AccessToken {
 				TokenResponse response = api.execute();
 				if(response.check()) {
 					AccessToken = response.getAccess_token();
+					isReturn = false;
 					int timeout = Integer.valueOf(response.getExpires_in()) - 200;
 					while(true) {
 						timeout--;
