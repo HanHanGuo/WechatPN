@@ -18,10 +18,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author 鲜果
  * @date 2019年4月9日
  *
- * @param <E>
- *            请求实体
- * @param <R>
- *            返回实体
+ * @param <E> 请求实体
+ * @param <R> 返回实体
  */
 @Slf4j
 public class WechatApi<R> {
