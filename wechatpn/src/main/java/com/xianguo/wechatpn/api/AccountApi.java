@@ -30,7 +30,7 @@ public class AccountApi {
 		public static class CreateQrCodeRequest {
 			private String action_name;//二维码类型，QR_SCENE为临时的整型参数值，QR_STR_SCENE为临时的字符串参数值，QR_LIMIT_SCENE为永久的整型参数值，QR_LIMIT_STR_SCENE为永久的字符串参数值
 			private ActionInfo action_info;//二维码详细信息
-			private String expire_seconds;
+			private String expire_seconds;//二维码有效时间
 			
 			public CreateQrCodeRequest() {
 				try {
