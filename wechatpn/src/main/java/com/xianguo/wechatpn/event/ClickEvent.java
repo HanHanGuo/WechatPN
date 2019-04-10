@@ -13,6 +13,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class MenuClickEvent extends WechatEventMessage {
+public class ClickEvent extends WechatEventMessage {
 	
 }

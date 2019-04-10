@@ -6,9 +6,15 @@ import org.springframework.stereotype.Component;
 import com.thoughtworks.xstream.XStream;
 import com.xianguo.wechatpn.WechatEventMessage;
 import com.xianguo.wechatpn.WechatMessage;
+import com.xianguo.wechatpn.event.ClickEvent;
 import com.xianguo.wechatpn.event.LocationEvent;
-import com.xianguo.wechatpn.event.MenuClickEvent;
+import com.xianguo.wechatpn.event.LocationSelectEvent;
+import com.xianguo.wechatpn.event.PicEvent;
+import com.xianguo.wechatpn.event.PicEvent.Item;
+import com.xianguo.wechatpn.event.ScancodeEvent;
 import com.xianguo.wechatpn.event.SubscribeEvent;
+import com.xianguo.wechatpn.event.ViewEvent;
+import com.xianguo.wechatpn.event.ViewMiniProgramEvent;
 import com.xianguo.wechatpn.msg.ImageMsg;
 import com.xianguo.wechatpn.msg.LinkMsg;
 import com.xianguo.wechatpn.msg.LocationMsg;
@@ -63,37 +69,37 @@ public class Handle {
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", TextMsg.class);
 			TextMsg textMsg = (TextMsg) xStream.fromXML(xml);
-			return msgHandle.HandleTextMsg(textMsg, xml);
+			return msgHandle.HandleMsg(textMsg, xml);
 		case IMAGE:
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", ImageMsg.class);
 			ImageMsg imageMsg = (ImageMsg) xStream.fromXML(xml);
-			return msgHandle.HandleImageMsg(imageMsg, xml);
+			return msgHandle.HandleMsg(imageMsg, xml);
 		case LINK:
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", LinkMsg.class);
 			LinkMsg linkMsg = (LinkMsg) xStream.fromXML(xml);
-			return msgHandle.HandleLinkMsg(linkMsg, xml);
+			return msgHandle.HandleMsg(linkMsg, xml);
 		case LOCATION:
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", LocationMsg.class);
 			LocationMsg locationMsg = (LocationMsg) xStream.fromXML(xml);
-			return msgHandle.HandleLocationMsg(locationMsg, xml);
+			return msgHandle.HandleMsg(locationMsg, xml);
 		case SHORTVIDEO:
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", ShortvideoMsg.class);
 			ShortvideoMsg shortvideoMsg = (ShortvideoMsg) xStream.fromXML(xml);
-			return msgHandle.HandleShortvideoMsg(shortvideoMsg, xml);
+			return msgHandle.HandleMsg(shortvideoMsg, xml);
 		case VIDEO:
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", VideoMsg.class);
 			VideoMsg videoMsg = (VideoMsg) xStream.fromXML(xml);
-			return msgHandle.HandleVideoMsg(videoMsg, xml);
+			return msgHandle.HandleMsg(videoMsg, xml);
 		case VOICE:
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", VoiceMsg.class);
 			VoiceMsg voiceMsg = (VoiceMsg) xStream.fromXML(xml);
-			return msgHandle.HandleVoiceMsg(voiceMsg, xml);
+			return msgHandle.HandleMsg(voiceMsg, xml);
 		case EVENT://处理事件
 			xStream = XmlUtils.GetXmlBean();
 			xStream.alias("xml", WechatEventMessage.class);
@@ -105,19 +111,54 @@ public class Handle {
 					xStream = XmlUtils.GetXmlBean();
 					xStream.alias("xml", SubscribeEvent.class);
 					SubscribeEvent subscribeEvent = (SubscribeEvent) xStream.fromXML(xml);
-					eventHandle.Handle(subscribeEvent, xml);
+					eventHandle.HandleEvent(subscribeEvent, xml);
 					break;
 				case LOCATION:
 					xStream = XmlUtils.GetXmlBean();
 					xStream.alias("xml", LocationEvent.class);
 					LocationEvent locationEvent = (LocationEvent) xStream.fromXML(xml);
-					eventHandle.HandleLocationEvent(locationEvent, xml);
+					eventHandle.HandleEvent(locationEvent, xml);
 					break;
+				case CLICK:
 				case MENU_CLICK:
 					xStream = XmlUtils.GetXmlBean();
-					xStream.alias("xml", MenuClickEvent.class);
-					MenuClickEvent menuClickEvent = (MenuClickEvent) xStream.fromXML(xml);
-					eventHandle.HandleMenuClickEvent(menuClickEvent, xml);
+					xStream.alias("xml", ClickEvent.class);
+					ClickEvent clickEvent = (ClickEvent) xStream.fromXML(xml);
+					eventHandle.HandleEvent(clickEvent, xml);
+					break;
+				case PIC_PHOTO_OR_ALBUM:
+				case PIC_SYSPHOTO:
+				case PIC_WEIXIN:
+					xStream = XmlUtils.GetXmlBean();
+					xStream.alias("xml", PicEvent.class);
+					xStream.alias("item", Item.class);
+					PicEvent picEvent = (PicEvent) xStream.fromXML(xml);
+					eventHandle.HandleEvent(picEvent, xml);
+					break;
+				case LOCATION_SELECT:
+					xStream = XmlUtils.GetXmlBean();
+					xStream.alias("xml", LocationSelectEvent.class);
+					LocationSelectEvent locationSelectEvent = (LocationSelectEvent) xStream.fromXML(xml);
+					eventHandle.HandleEvent(locationSelectEvent, xml);
+					break;
+				case VIEW_MINIPROGRAM:
+					xStream = XmlUtils.GetXmlBean();
+					xStream.alias("xml", ViewMiniProgramEvent.class);
+					ViewMiniProgramEvent viewMiniProgramEvent = (ViewMiniProgramEvent) xStream.fromXML(xml);
+					eventHandle.HandleEvent(viewMiniProgramEvent, xml);
+					break;
+				case VIEW:
+					xStream = XmlUtils.GetXmlBean();
+					xStream.alias("xml", ViewEvent.class);
+					ViewEvent viewEvent = (ViewEvent) xStream.fromXML(xml);
+					eventHandle.HandleEvent(viewEvent, xml);
+					break;
+				case SCANCODE_PUSH:
+				case SCANCODE_WAITMSG:
+					xStream = XmlUtils.GetXmlBean();
+					xStream.alias("xml", ScancodeEvent.class);
+					ScancodeEvent scancodeEvent = (ScancodeEvent) xStream.fromXML(xml);
+					eventHandle.HandleEvent(scancodeEvent, xml);
 					break;
 			}
 			return "";

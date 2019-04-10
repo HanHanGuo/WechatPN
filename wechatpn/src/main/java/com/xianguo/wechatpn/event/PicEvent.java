@@ -8,14 +8,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 弹出系统拍照发图的事件推送
+ * 弹出系统拍照发图的事件推送，弹出拍照或者相册发图的事件推送，弹出微信相册发图器的事件推送
  * @author 鲜果
  * @date 2019年4月10日
  *
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class PicSysphotoEvent extends WechatEventMessage {
+public class PicEvent extends WechatEventMessage {
 	
 	private SendPicsInfo SendPicsInfo;//	发送的图片信息
 	
