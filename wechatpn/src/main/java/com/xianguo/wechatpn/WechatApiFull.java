@@ -1,5 +1,6 @@
 package com.xianguo.wechatpn;
 
+import java.io.InputStream;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -32,21 +33,26 @@ public class WechatApiFull<E,R> extends WechatApi<R> {
 	 * @return R 返回封装好的实体
 	 * @throws
 	 */
+	@SuppressWarnings("unchecked")
 	public R execute(E e) {
-		String jsonRes = "";
+		Object res = null;
 		if (method == HttpRequestType.POST) {
 			String jsonStr = JSON.toJSONString(e);
-			jsonRes = Post(jsonStr);
+			res = Post(jsonStr);
 		}else if(method == HttpRequestType.GET) {
 			Map<String, Object> params = JSON.parseObject(JSON.toJSONString(e));
-			jsonRes = Get(params);
+			res = Get(params);
 		}
-		if (jsonRes == null) {
+		if (res == null) {
 			return null;
 		}
-		log.info(jsonRes);
-		R object = JSON.parseObject(jsonRes, resClass);
-		return object;
+		if(res instanceof InputStream) {
+			return (R) res;
+		}else {
+			log.info(res.toString());
+			R object = JSON.parseObject(res.toString(), resClass);
+			return object;
+		}
 	}
 	
 	

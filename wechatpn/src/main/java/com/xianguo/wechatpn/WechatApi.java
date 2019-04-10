@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import com.xianguo.wechatpn.enums.HttpRequestType;
@@ -34,7 +35,7 @@ public class WechatApi<R> {
 		this.resClass = resClass;
 	}
 
-	protected String Get(Map<String, Object> params) {
+	protected Object Get(Map<String, Object> params) {
 		try {
 			for(String key : params.keySet()) {
 				if(path.lastIndexOf("?") != -1) {
@@ -47,17 +48,25 @@ public class WechatApi<R> {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(5 * 1000);
 			conn.setRequestMethod("GET");
+			
+			
+			Map<String, List<String>> map = conn.getHeaderFields();
+			String contentType = map.get("Content-Type").get(0);
 			InputStream inStream = conn.getInputStream();
-			byte[] data = toByteArray(inStream);
-			String result = new String(data, "UTF-8");
-			return result;
+			if(contentType.lastIndexOf("application/json") != -1) {
+				byte[] data = toByteArray(inStream);
+				String result = new String(data, "UTF-8");
+				return result;
+			}else {
+				return inStream;
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;
 		}
 	}
 
-	protected String Post(String params) {
+	protected Object Post(String params) {
 		try {
 			String encoding = "UTF-8";
 			byte[] data = params.getBytes(encoding);
@@ -73,12 +82,16 @@ public class WechatApi<R> {
 			outStream.write(data);
 			outStream.flush();
 			outStream.close();
-			if (conn.getResponseCode() == 200) {
-				InputStream inStream = conn.getInputStream();
+
+			Map<String, List<String>> map = conn.getHeaderFields();
+			String contentType = map.get("Content-Type").get(0);
+			InputStream inStream = conn.getInputStream();
+			if (conn.getResponseCode() == 200 && contentType.lastIndexOf("application/json") != -1) {
 				String result = new String(toByteArray(inStream), "UTF-8");
 				return result;
+			}else {
+				return inStream;
 			}
-			return null;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;

@@ -1,5 +1,6 @@
 package com.xianguo.wechatpn;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,20 +32,25 @@ public class WechatApiDefect<R> extends WechatApi<R> {
 	 * @return R
 	 * @throws
 	 */
+	@SuppressWarnings("unchecked")
 	public R execute() {
-		String jsonRes = "";
+		Object res = null;
 		if (method == HttpRequestType.POST) {
-			jsonRes = Post("");
+			res = Post("");
 		}else if(method == HttpRequestType.GET) {
 			Map<String, Object> params = new HashMap<>();
-			jsonRes = Get(params);
+			res = Get(params);
 		}
-		if (jsonRes == null) {
+		if (res == null) {
 			return null;
 		}
-		log.info(jsonRes);
-		R object = JSON.parseObject(jsonRes, resClass);
-		return object;
+		if(res instanceof InputStream) {
+			return (R) res;
+		}else {
+			log.info(res.toString());
+			R object = JSON.parseObject(res.toString(), resClass);
+			return object;
+		}
 	}
 	
 }
