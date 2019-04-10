@@ -23,7 +23,7 @@
 	</parent>
 
 	<dependencies>
-		<!-- hotmapper -->
+		<!-- hotmapper --> 
 		<dependency>
 			<groupId>com.xianguo</groupId>
 			<artifactId>hotmapper</artifactId>
