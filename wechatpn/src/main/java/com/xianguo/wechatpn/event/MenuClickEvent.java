@@ -14,5 +14,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class MenuClickEvent extends WechatEventMessage {
-	private String EventKey;//事件KEY值，与自定义菜单接口中KEY值对应
+	
 }
