@@ -15,4 +15,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class WechatEventMessage extends WechatMessage {
 	private WechatEventType Event;//微信事件
+	private String EventKey;//事件KEY值
 }
