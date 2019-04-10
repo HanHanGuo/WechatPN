@@ -1,7 +1,5 @@
 package com.xianguo.wechatpn.interfaces;
 
-import com.xianguo.wechatpn.enums.HttpRequestType;
-
 /**
  * 枚举基类 fastjson解码用
  * @author 鲜果

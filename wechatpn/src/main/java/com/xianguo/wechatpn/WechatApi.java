@@ -56,6 +56,7 @@ public class WechatApi<R> {
 			if(contentType.lastIndexOf("application/json") != -1) {
 				byte[] data = toByteArray(inStream);
 				String result = new String(data, "UTF-8");
+				inStream.close();
 				return result;
 			}else {
 				return inStream;
@@ -88,6 +89,7 @@ public class WechatApi<R> {
 			InputStream inStream = conn.getInputStream();
 			if (conn.getResponseCode() == 200 && contentType.lastIndexOf("application/json") != -1) {
 				String result = new String(toByteArray(inStream), "UTF-8");
+				inStream.close();
 				return result;
 			}else {
 				return inStream;

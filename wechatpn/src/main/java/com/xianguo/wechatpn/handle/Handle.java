@@ -20,6 +20,12 @@ import com.xianguo.wechatpn.utils.XmlUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 微信处理器,负责给消息处理器和事件处理器分发任务
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
 @Component
 @Slf4j
 public class Handle {

@@ -14,6 +14,12 @@ import com.xianguo.wechatpn.utils.WechatConstants;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 微信url入口，以及回调接收入口
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
 @Slf4j
 public class WechatController {
 	

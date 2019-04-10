@@ -13,6 +13,12 @@ import com.xianguo.wechatpn.event.MenuClickEvent;
 import com.xianguo.wechatpn.event.SubscribeEvent;
 import com.xianguo.wechatpn.interfaces.WechatEventListener;
 
+/**
+ * 微信事件处理器
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
 @Component
 public class EventHandle {
 	

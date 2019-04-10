@@ -4,6 +4,12 @@ import com.xianguo.wechatpn.interfaces.ApiIsSuccess;
 
 import lombok.Data;
 
+/**
+ * 微信api公共返回对象
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
 @Data
 public class WechatApiPublicResponse implements ApiIsSuccess {
 	private String errcode;//错误码

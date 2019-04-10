@@ -8,6 +8,12 @@ import com.xianguo.wechatpn.interfaces.ApiIsSuccess;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 微信api请求架构流，可用于下载图片以及文件
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class WechatApiInputStream extends InputStream implements ApiIsSuccess {

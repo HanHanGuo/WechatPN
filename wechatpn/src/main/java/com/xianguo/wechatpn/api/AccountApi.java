@@ -11,6 +11,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 账号管理api
+ * @author 鲜果
+ * @date 2019年4月10日
+ *
+ */
 @Slf4j
 public class AccountApi {
 	
