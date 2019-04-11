@@ -37,8 +37,12 @@ public class WechatApiFull<E,R> extends WechatApi<R> {
 	public R execute(E e) {
 		Object res = null;
 		if (method == HttpRequestType.POST) {
-			String jsonStr = JSON.toJSONString(e);
-			res = Post(jsonStr);
+			if(e instanceof WechatApiUploadStream) {
+				res = Post(e);
+			}else {
+				String jsonStr = JSON.toJSONString(e);
+				res = Post(jsonStr);
+			}
 		}else if(method == HttpRequestType.GET) {
 			Map<String, Object> params = JSON.parseObject(JSON.toJSONString(e));
 			res = Get(params);

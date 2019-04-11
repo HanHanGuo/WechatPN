@@ -1,6 +1,5 @@
 package com.xianguo.wechatpn;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import com.xianguo.wechatpn.interfaces.ApiIsSuccess;
@@ -16,10 +15,11 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class WechatApiInputStream extends InputStream implements ApiIsSuccess {
+public class WechatApiInputStream implements ApiIsSuccess {
 	
 	private String errcode;//错误码
 	private String errmsg;//错误信息
+	private InputStream inputStream;//文件下载流，接口调用成功后自行处理
 	
 	@Override
 	public Boolean check() {
@@ -27,11 +27,6 @@ public class WechatApiInputStream extends InputStream implements ApiIsSuccess {
 			return true;
 		}
 		return false;
-	}
-	
-	@Override
-	public int read() throws IOException {
-		return 0;
 	}
 
 }

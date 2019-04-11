@@ -29,4 +29,5 @@ public class TokenApi extends WechatApiDefect<TokenResponse> {
 		private Integer expires_in;//凭证有效时间，单位：秒
 		
 	}
+	
 }

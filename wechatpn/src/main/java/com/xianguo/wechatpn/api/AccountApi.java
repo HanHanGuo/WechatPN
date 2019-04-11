@@ -4,6 +4,8 @@ import com.xianguo.wechatpn.WechatApiFull;
 import com.xianguo.wechatpn.WechatApiPublicResponse;
 import com.xianguo.wechatpn.api.AccountApi.CreateQrCodeApi.CreateQrCodeRequest;
 import com.xianguo.wechatpn.api.AccountApi.CreateQrCodeApi.CreateQrCodeResponse;
+import com.xianguo.wechatpn.api.AccountApi.ShortUrlApi.ShortUrlRequest;
+import com.xianguo.wechatpn.api.AccountApi.ShortUrlApi.ShortUrlResponse;
 import com.xianguo.wechatpn.enums.HttpRequestType;
 import com.xianguo.wechatpn.utils.AccessToken;
 
@@ -75,6 +77,39 @@ public class AccountApi {
 			private Integer expire_seconds;//该二维码有效时间，以秒为单位。 最大不超过2592000（即30天）。
 			private String url;//二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片
 		}
+	}
+	
+	/**
+	 * 长链接转短链接接口
+	 * @author 鲜果
+	 * @date 2019年4月11日
+	 *
+	 */
+	public static class ShortUrlApi extends WechatApiFull<ShortUrlRequest, ShortUrlResponse> {
+		
+		public ShortUrlApi() {
+			super(ShortUrlResponse.class, "https://api.weixin.qq.com/cgi-bin/shorturl?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
+		}
+
+
+		@Data
+		public static class ShortUrlRequest {
+			private String action;
+			private String long_url;
+			
+			public ShortUrlRequest() {
+				this.action = "long2short";
+			}
+			
+		}
+		
+		
+		@Data
+		@EqualsAndHashCode(callSuper=false)
+		public static class ShortUrlResponse extends WechatApiPublicResponse {
+			private String short_url;
+		}
+		
 	}
 	
 }

@@ -34,22 +34,38 @@ public class WechatApiDefect<R> extends WechatApi<R> {
 	 */
 	@SuppressWarnings("unchecked")
 	public R execute() {
-		Object res = null;
-		if (method == HttpRequestType.POST) {
-			res = Post("");
-		}else if(method == HttpRequestType.GET) {
-			Map<String, Object> params = new HashMap<>();
-			res = Get(params);
-		}
-		if (res == null) {
+		try {
+			Object res = null;
+			if (method == HttpRequestType.POST) {
+				res = Post("");
+			}else if(method == HttpRequestType.GET) {
+				Map<String, Object> params = new HashMap<>();
+				res = Get(params);
+			}
+			if (res == null) {
+				return null;
+			}
+			if(res instanceof InputStream) {
+				if(resClass.equals(WechatApiInputStream.class)) {
+					WechatApiInputStream is = (WechatApiInputStream) resClass.newInstance();
+					is.setInputStream((InputStream) res);
+					return (R) is;
+				}else {
+					throw new RuntimeException("api返回类型不正确，请确定返回类型为WechatApiInputStream");
+				}
+			}else {
+				log.info(res.toString());
+				R object = JSON.parseObject(res.toString(), resClass);
+				return object;
+			}
+		} catch (InstantiationException e) {
+			log.info("execut方法返回class.newInstance出错");
+			log.error(e.getMessage(),e);
 			return null;
-		}
-		if(res instanceof InputStream) {
-			return (R) res;
-		}else {
-			log.info(res.toString());
-			R object = JSON.parseObject(res.toString(), resClass);
-			return object;
+		} catch (IllegalAccessException e) {
+			log.info("execut方法返回class.newInstance出错");
+			log.error(e.getMessage(),e);
+			return null;
 		}
 	}
 	
