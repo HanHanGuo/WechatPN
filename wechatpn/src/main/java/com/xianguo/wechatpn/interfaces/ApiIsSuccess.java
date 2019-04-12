@@ -19,4 +19,14 @@ public interface ApiIsSuccess {
 	 */
 	public Boolean check();
 	
+	/**
+	 * 获得错误码对应的错误信息
+	 *
+	 * @author 鲜果
+	 * @param @return
+	 * @date 2019年4月12日
+	 * @return String
+	 * @throws
+	 */
+	public String returnErrorMsgZHCN();
 }

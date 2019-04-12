@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.xianguo.wechatpn.enums.HttpRequestType;
+import com.xianguo.wechatpn.enums.WechatMediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,7 +74,7 @@ public class WechatApi<R> {
 			String encoding = "UTF-8";
 			
 			HttpURLConnection conn = null;
-			String finalSplit = "---------------------------123821742118716";
+			String finalSplit = "---------------------------jhsfksdhfkjsdhfukqawjdnas";
 			if(params instanceof String) {//普通参数
 				URL url = new URL(path);
 				conn = (HttpURLConnection) url.openConnection();
@@ -107,8 +108,8 @@ public class WechatApi<R> {
 		        conn.setUseCaches(false);//POST方式不能使用缓存
 		        
 				StringBuilder strbuil = new StringBuilder();
-				strbuil.append("\r\n").append("--").append(finalSplit).append("\r\n");
-				strbuil.append("Content-Disposition: form-data; name=\"" + uploadStream.getInputName() + "\"; filename=\"" + uploadStream.getFileName() + "\"; filelength=\""+uploadStream.getInputStream().available()+"\"\r\n");
+				strbuil.append("--").append(finalSplit).append("\r\n");
+				strbuil.append("Content-Disposition: form-data; name=\"media\"; filename=\"" + uploadStream.getFileName() + "\"; filelength=\""+uploadStream.getInputStream().available()+"\"\r\n");
 				strbuil.append("Content-Type:application/octet-stream\r\n\r\n");
 				OutputStream outStream = conn.getOutputStream();
 				outStream.write(strbuil.toString().getBytes());
@@ -119,7 +120,14 @@ public class WechatApi<R> {
 					outStream.write(temp, 0, len);
 				}
 				din.close();
-				byte[] endData = ( "\r\n--" + finalSplit + "--\r\n").getBytes();
+				if(WechatMediaType.VIDEO == uploadStream.getType()) {
+					strbuil = new StringBuilder();
+					strbuil.append("--").append(finalSplit).append("\r\n");
+					strbuil.append("Content-Disposition: form-data; name=\"description\"\r\n\r\n");
+					strbuil.append("{\"title\":\""+uploadStream.getTitle()+"\",\"introduction\":\""+uploadStream.getIntroduction()+"\"}");
+					outStream.write(strbuil.toString().getBytes());
+				}
+				byte[] endData = ( "\r\n--" + finalSplit + "--\r\n\r\n").getBytes();
 				outStream.write(endData);
 				outStream.flush();
 				outStream.close();

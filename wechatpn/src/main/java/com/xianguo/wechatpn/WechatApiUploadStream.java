@@ -2,6 +2,10 @@ package com.xianguo.wechatpn;
 
 import java.io.InputStream;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.xianguo.wechatpn.enums.WechatMediaType;
+import com.xianguo.wechatpn.utils.FastJsonEnmuDecoder;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,13 +20,11 @@ import lombok.EqualsAndHashCode;
 public class WechatApiUploadStream {
 
 	private String fileName;//文件名称
-	private String inputName;
 	private InputStream InputStream;//文件流
-	private String title;//视频素材的标题
-	private String introduction;//视频素材的描述
+	@JSONField(serializeUsing = FastJsonEnmuDecoder.class, deserializeUsing = FastJsonEnmuDecoder.class)
+	private WechatMediaType type;//媒体类型
 	
-	public WechatApiUploadStream() {
-		inputName = "media";
-	}
+	private String title;//视频素材的标题 type为视频的时候必填
+	private String introduction;//视频素材的描述 type为视频的时候必填
 
 }

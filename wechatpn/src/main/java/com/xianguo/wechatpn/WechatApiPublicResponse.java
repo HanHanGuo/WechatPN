@@ -22,4 +22,9 @@ public class WechatApiPublicResponse implements ApiIsSuccess {
 		}
 		return false;
 	}
+
+	@Override
+	public String returnErrorMsgZHCN() {
+		return WechatApiErrorMsg.getMsg(errcode);
+	}
 }

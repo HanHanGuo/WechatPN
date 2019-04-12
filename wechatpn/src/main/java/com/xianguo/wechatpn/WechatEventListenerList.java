@@ -15,5 +15,5 @@ import com.xianguo.wechatpn.interfaces.WechatEventListener;
 public class WechatEventListenerList extends HashMap<WechatEventType, List<WechatEventListener>> {
 
 	private static final long serialVersionUID = 1L;
-
+	
 }

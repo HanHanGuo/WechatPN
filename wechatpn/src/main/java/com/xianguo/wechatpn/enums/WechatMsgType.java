@@ -18,7 +18,8 @@ public enum WechatMsgType implements EnmuDecoderInterface {
 	LINK("link"),//链接消息
 	EVENT("event"),//事件推送
 	MUSIC("music"),//音乐消息
-	NEWS("news");//图文消息
+	NEWS("news"),//图文消息
+	TRANSFER_CUSTOMER_SERVICE("transfer_customer_service");//客服消息
 	
 	
 	private final String value;

@@ -198,6 +198,7 @@ public class MessageDataApi {
 			private Integer count_interval;
 			private Integer msg_user;
 		}
+		
 	}
 	/**
 	 *	 获取消息发送分布月数据

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.xianguo.wechatpn.WechatApiDefect;
+import com.xianguo.wechatpn.WechatApiErrorMsg;
 import com.xianguo.wechatpn.WechatApiFull;
 import com.xianguo.wechatpn.WechatApiPublicResponse;
 import com.xianguo.wechatpn.api.MenuApi.CreateMenuApi.CreateMenuRequest;
@@ -86,6 +87,11 @@ public class MenuApi {
 					return true;
 				}
 				return false;
+			}
+
+			@Override
+			public String returnErrorMsgZHCN() {
+				return WechatApiErrorMsg.getMsg(errcode);
 			}
 			
 		}

@@ -17,3 +17,4 @@ public class ImageMsg extends WechatMessage {
 	private String PicUrl;//	图片链接（由系统生成）
 	private String MediaId;//	图片消息媒体id，可以调用获取临时素材接口拉取数据。
 }
+
