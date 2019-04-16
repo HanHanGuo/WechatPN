@@ -45,4 +45,18 @@ public class WechatConstants {
 	public static int WX_TOKEN_PROT;//微信token socket端口
 	
 	public static String WX_TOKEN_KEY;//微信分布式TOKEN秘钥
+	
+	public static String WX_TOKEN_GET_IN = "~_WX_TOKEN_GET_IN";//无时效性获取token
+	
+	public static String WX_TOKEN_GET_CLIENT_NOMSG = "NoMsg";//客户端未发送任何消息
+	
+	public static String WX_TOKEN_GET_ARRAY_LENGTH_ERROR = "ArrayLengthError";//数组长度错误
+	
+	public static String WX_TOKEN_GET_KEY_ERROR = "KeyError";//秘钥错误
+	
+	public static String WX_TOKEN_GET_SUCCESS = "SUCCESS";//校验成功
+	
+	public static String WX_TOKEN_GET_ERROR = "ERROR";//服务器内部错误
+	
+	public static String WX_TOKEN_GET_DATA_ERROR = "DataError";//参数错误
 }
