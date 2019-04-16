@@ -7,8 +7,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -22,8 +25,9 @@ public class AccessToken {
 
 	private static String AccessToken;//Token值
 	private static Boolean isReturn = true;//返回标识
-	private static Object tokenSocketLock;//TokenServer和ScoketServer公用锁
+	private static Object tokenSocketLock = "";//TokenServer和ScoketServer公用锁
 	private static Boolean tokenServerIsRuning = false;//Token服务是否在运行中
+	private Lock lock = new ReentrantLock();//Token线程同步锁
 	
 	@SuppressWarnings("all")
 	public static String getAccessToken() {
@@ -53,7 +57,6 @@ public class AccessToken {
 			}
 			return AccessToken;
 		} catch (Exception e) {
-			log.info("socket通信异常", e);
 			log.error(e.getMessage(), e);
 			return null;
 		}
@@ -114,14 +117,23 @@ public class AccessToken {
 					input.close();
 					os.close();
 				}
-			} catch (Exception e) {
+			} catch (SocketException e) {
+				log.info("服务端死亡，启动Token服务中");
+				new Thread(new AccessToken().new ScoketServer()).start();
+			} catch (IOException e) {
 				log.error(e.getMessage(),e);
 				log.info("客户端获取Token失败");
 			} finally {
 				try {
-					socket.close();
-					input.close();
-					os.close();
+					if(socket != null){
+						socket.close();
+					}
+					if(input != null){
+						input.close();
+					}
+					if(os != null){
+						os.close();
+					}
 				} catch (IOException e) {
 					log.error(e.getMessage(),e);
 				}
@@ -142,13 +154,15 @@ public class AccessToken {
 		public void run() {
 			try {
 				while(true) {
+					lock.lock();
 					tokenServerIsRuning = true;
 					TokenApi api = new TokenApi();
 					TokenResponse response = api.execute();
 					if(response.check()) {
 						AccessToken = response.getAccess_token();
+						lock.unlock();
 						isReturn = false;
-						int timeout = Integer.valueOf(response.getExpires_in()) - 200;
+						int timeout = Integer.valueOf(response.getExpires_in()) - 7180;
 						synchronized(tokenSocketLock) {
 							while(true) {
 								timeout--;
@@ -187,6 +201,7 @@ public class AccessToken {
 		public void run() {
 			try {
 				if(!tokenServerIsRuning) {//启动Token请求线程
+					tokenServerIsRuning = true;
 					new Thread(new TokenServer()).start();
 				}
 				// 启动服务端请求token 放入socket
@@ -196,15 +211,23 @@ public class AccessToken {
 					if(!tokenServerIsRuning) {//监听Token服务线程,如果被意外关闭则重启
 						new Thread(new TokenServer()).start();
 					}
-					
+					String returnMsg = WechatConstants.WX_TOKEN_GET_ERROR;
 					Socket socket = serverSocket.accept();
 					StringBuilder sb = new StringBuilder();
 					InputStream is = socket.getInputStream();
 					byte[] temp = new byte[1024];
 					int len = is.read(temp);
+					if(len == -1) {
+						returnMsg = WechatConstants.WX_TOKEN_GET_CLIENT_NOMSG;
+						OutputStream outputStream = socket.getOutputStream();
+						outputStream.write(returnMsg.getBytes());
+						outputStream.close();
+						is.close();//关闭接收流
+						socket.close();//关闭socket链接
+						continue;
+					}
 					sb.append(new String(temp,0,len));
 					String clientMsg = sb.toString();
-					String returnMsg = WechatConstants.WX_TOKEN_GET_ERROR;
 					if(StringUtils.isEmpty(clientMsg)) {//如果客户端没有发送消息
 						returnMsg = WechatConstants.WX_TOKEN_GET_CLIENT_NOMSG;
 					}
@@ -231,12 +254,14 @@ public class AccessToken {
 						returnMsg = WechatConstants.WX_TOKEN_GET_DATA_ERROR;//参数错误
 					}
 					if(WechatConstants.WX_TOKEN_GET_SUCCESS.equals(returnMsg)) {//获取成功
+						lock.lock();
 						//从socket获取token
 						OutputStream outputStream = socket.getOutputStream();
 						outputStream.write(AccessToken.getBytes());
 						outputStream.close();
 						is.close();
 						socket.close();
+						lock.unlock();
 					}else {//获取失败
 						OutputStream outputStream = socket.getOutputStream();
 						outputStream.write(returnMsg.getBytes());
@@ -249,7 +274,9 @@ public class AccessToken {
 				log.error(e.getMessage(),e);
 				log.info("重启Token服务中");
 				try {
-					serverSocket.close();
+					if(serverSocket != null) {
+						serverSocket.close();
+					}
 					new Thread(new ScoketServer()).start();
 				} catch (IOException e1) {
 					log.error(e1.getMessage(),e1);
