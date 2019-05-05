@@ -1,9 +1,13 @@
 package com.xianguo.wechatpn.api;
 
+import java.util.List;
+
 import com.xianguo.wechatpn.WechatApiFull;
 import com.xianguo.wechatpn.WechatApiPublicResponse;
 import com.xianguo.wechatpn.api.UserApi.GetUserInfoApi.GetUserInfoRequest;
 import com.xianguo.wechatpn.api.UserApi.GetUserInfoApi.GetUserInfoResponse;
+import com.xianguo.wechatpn.api.UserApi.GetUserListInfoApi.GetUserListInfoRequest;
+import com.xianguo.wechatpn.api.UserApi.GetUserListInfoApi.GetUserListInfoResponse;
 import com.xianguo.wechatpn.enums.HttpRequestType;
 import com.xianguo.wechatpn.utils.AccessToken;
 
@@ -34,6 +38,10 @@ public class UserApi {
 		public static class GetUserInfoRequest {
 			private String openid;//普通用户的标识，对当前公众号唯一
 			private String lang;//返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+			
+			public GetUserInfoRequest() {
+				this.lang = "zh_CN";
+			}
 		}
 		
 		@Data
@@ -57,6 +65,31 @@ public class UserApi {
 			private String qr_scene;//	二维码扫码场景（开发者自定义）
 			private String qr_scene_str;//	二维码扫码场景描述（开发者自定义）
 		}
+	}
+	
+	/**
+	 * 批量 获取用户信息
+	 * @author 鲜果
+	 * @date 2019年4月19日
+	 *
+	 */
+	public static class GetUserListInfoApi extends WechatApiFull<GetUserListInfoRequest, GetUserListInfoResponse> {
+		
+		public GetUserListInfoApi() {
+			super(GetUserListInfoResponse.class, "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token="+AccessToken.getAccessToken(), HttpRequestType.POST);
+		}
+
+		@Data
+		public static class GetUserListInfoRequest {
+			private List<GetUserInfoRequest> user_list;//用户列表
+		}
+		
+		@Data
+		@EqualsAndHashCode(callSuper=false)
+		public static class GetUserListInfoResponse extends WechatApiPublicResponse {
+			private List<GetUserInfoResponse> user_info_list;//用户列表
+		}
+		
 	}
 	
 }
