@@ -162,7 +162,7 @@ public class AccessToken {
 						AccessToken = response.getAccess_token();
 						lock.unlock();
 						isReturn = false;
-						int timeout = Integer.valueOf(response.getExpires_in()) - 7180;
+						int timeout = Integer.valueOf(response.getExpires_in()) - 200;
 						synchronized(tokenSocketLock) {
 							while(true) {
 								timeout--;
@@ -213,6 +213,7 @@ public class AccessToken {
 					}
 					String returnMsg = WechatConstants.WX_TOKEN_GET_ERROR;
 					Socket socket = serverSocket.accept();
+					log.info("收到链接请求");
 					StringBuilder sb = new StringBuilder();
 					InputStream is = socket.getInputStream();
 					byte[] temp = new byte[1024];
