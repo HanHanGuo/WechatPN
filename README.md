@@ -1,0 +1,8 @@
+# WechatPN
+基于HotMapper和Config的微信公众号开发框架。
+对公众号所有消息和事件做了处理，支持的列表有:TEXT("text")，IMAGE，VOICE，VIDEO，SHORTVIDEO，LOCATION，LINK，EVENT，MUSIC，NEWS，TRANSFER_CUSTOMER_SERVICE
+事件推送支持列表有:SUBSCRIBE，UNSUBSCRIBE，SCAN，LOCATION，MENU_CLICK，CLICK，VIEW，SCANCODE_PUSH，SCANCODE_WAITMSG，PIC_SYSPHOTO，PIC_PHOTO_OR_ALBUM，PIC_WEIXIN，LOCATION_SELECT，VIEW_MINIPROGRAM
+所有的消息和事件都支持拦截器和监听器，监听器按顺序处理前方拦截器回复用户之后后方拦截器讲不在执行，监听器将按顺序执行所有。
+对公众号客服做了完整的处理，可实现0成本多客服接入，开发者只需要实现一个客服消息拦截器即可。
+公众号的所有API，WechatPN框架完全实现，在com.xianguo.wechatpn.api包下，开发者可使用不同的API请求器完成所有公众号的API调用，对所有请求参数和返回参数都做了实体化封装，以面向对象的方式调用API。
+对公众号的AccessToken做了分布式处理，可支持多个服务器运营一个公众号，不会造成AccessToken混乱的情况，使用Socket进行多个服务器之间的通信，严格撰写通信协议，每次请求不会超过1kb，使用线程锁加心跳挂起的方式最大限度的优化分布式AcceessToken性能。
