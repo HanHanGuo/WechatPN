@@ -189,7 +189,7 @@ public class AccessToken {
 	/**
 	 * 服务（即等待被请求）
 	 * 
-	 * @author 武昱坤
+	 * @author 鲜果
 	 * @date 2019年4月9日
 	 *
 	 */
